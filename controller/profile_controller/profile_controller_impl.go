@@ -1,6 +1,7 @@
 package profilecontroller
 
 import (
+	"github.com/faridlan/firestore-go/model/web"
 	profileservice "github.com/faridlan/firestore-go/service/profile_service"
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,7 +17,26 @@ func NewProfileController(profileService profileservice.ProfileService) ProfileC
 }
 
 func (controller *ProfileControllerImpl) Save(ctx *fiber.Ctx) error {
-	panic("not implemented") // TODO: Implement
+
+	profileCreate := new(web.Profile)
+	err := ctx.BodyParser(profileCreate)
+	if err != nil {
+		return err
+	}
+
+	profileResponse, err := controller.ProfileService.Save(ctx.Context(), profileCreate)
+	if err != nil {
+		return err
+	}
+
+	webRespons := web.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   profileResponse,
+	}
+
+	return ctx.JSON(webRespons)
+
 }
 
 func (controller *ProfileControllerImpl) Find(ctx *fiber.Ctx) error {

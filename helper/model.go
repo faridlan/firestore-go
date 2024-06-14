@@ -8,6 +8,7 @@ import (
 func ToProfileResponse(profile *domain.Profile) *web.Profile {
 
 	return &web.Profile{
+		ID:          profile.ID,
 		Name:        profile.Name,
 		Description: profile.Description,
 		Email:       profile.Email,
