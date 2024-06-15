@@ -19,6 +19,7 @@ func NewRouter(router Router) *fiber.App {
 	)
 
 	app.Post("/api/profiles", router.ProfileContrroler.Save)
+	app.Get("/api/profiles/:profileId", router.ProfileContrroler.Find)
 
 	return app
 

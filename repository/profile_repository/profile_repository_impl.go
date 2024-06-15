@@ -2,6 +2,7 @@ package profilerepository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"cloud.google.com/go/firestore"
@@ -39,7 +40,23 @@ func (repository *ProfileRepositoryImpl) Save(ctx context.Context, client *fires
 }
 
 func (repository *ProfileRepositoryImpl) Find(ctx context.Context, client *firestore.Client, profileId string) (*domain.Profile, error) {
-	panic("not implemented") // TODO: Implement
+
+	doc := client.Collection("profiles").Doc(profileId)
+
+	docSnapshot, err := doc.Get(ctx)
+	if err != nil {
+		return nil, errors.New("profile not found")
+	}
+
+	var profile domain.Profile
+
+	err = docSnapshot.DataTo(&profile)
+	if err != nil {
+		return nil, errors.New("failed to decode collection :" + err.Error())
+	}
+
+	return &profile, nil
+
 }
 
 func (repository *ProfileRepositoryImpl) Update(ctx context.Context, client *firestore.Client, profileId string) (*domain.Profile, error) {

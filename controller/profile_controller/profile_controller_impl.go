@@ -40,7 +40,22 @@ func (controller *ProfileControllerImpl) Save(ctx *fiber.Ctx) error {
 }
 
 func (controller *ProfileControllerImpl) Find(ctx *fiber.Ctx) error {
-	panic("not implemented") // TODO: Implement
+
+	profileid := ctx.Params("profileId")
+
+	profileResposne, err := controller.ProfileService.Find(ctx.Context(), profileid)
+	if err != nil {
+		return err
+	}
+
+	webResponse := web.WebResponse{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data:   profileResposne,
+	}
+
+	return ctx.JSON(webResponse)
+
 }
 
 func (controller *ProfileControllerImpl) Update(ctx *fiber.Ctx) error {

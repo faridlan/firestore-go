@@ -55,8 +55,17 @@ func (service *ProfileServiceimpl) Save(ctx context.Context, request *web.Profil
 
 }
 
-func (service *ProfileServiceimpl) find(ctx context.Context, profileId string) (*web.Profile, error) {
-	panic("not implemented") // TODO: Implement
+func (service *ProfileServiceimpl) Find(ctx context.Context, profileId string) (*web.Profile, error) {
+
+	profileResponse, err := service.ProfileRepo.Find(ctx, service.Client, profileId)
+	if err != nil {
+		return nil, &exception.NotFound{
+			Message: err.Error(),
+		}
+	}
+
+	return helper.ToProfileResponse(profileResponse), nil
+
 }
 
 func (service *ProfileServiceimpl) Update(ctx context.Context, profileId string) (*web.Profile, error) {
