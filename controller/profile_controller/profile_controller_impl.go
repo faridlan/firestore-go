@@ -63,5 +63,19 @@ func (controller *ProfileControllerImpl) Update(ctx *fiber.Ctx) error {
 }
 
 func (controller *ProfileControllerImpl) Delete(ctx *fiber.Ctx) error {
-	panic("not implemented") // TODO: Implement
+
+	profileid := ctx.Params("profileId")
+
+	err := controller.ProfileService.Delete(ctx.Context(), profileid)
+	if err != nil {
+		return err
+	}
+
+	webResponse := web.WebResponse{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+	}
+
+	return ctx.JSON(webResponse)
+
 }

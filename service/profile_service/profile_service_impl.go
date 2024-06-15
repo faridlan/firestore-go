@@ -73,5 +73,19 @@ func (service *ProfileServiceimpl) Update(ctx context.Context, profileId string)
 }
 
 func (service *ProfileServiceimpl) Delete(ctx context.Context, profileId string) error {
-	panic("not implemented") // TODO: Implement
+
+	profileResponse, err := service.ProfileRepo.Find(ctx, service.Client, profileId)
+	if err != nil {
+		return &exception.NotFound{
+			Message: err.Error(),
+		}
+	}
+
+	err = service.ProfileRepo.Delete(ctx, service.Client, profileResponse.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
 }

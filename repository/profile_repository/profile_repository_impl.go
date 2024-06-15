@@ -55,6 +55,8 @@ func (repository *ProfileRepositoryImpl) Find(ctx context.Context, client *fires
 		return nil, errors.New("failed to decode collection :" + err.Error())
 	}
 
+	profile.ID = docSnapshot.Ref.ID
+
 	return &profile, nil
 
 }
@@ -64,5 +66,13 @@ func (repository *ProfileRepositoryImpl) Update(ctx context.Context, client *fir
 }
 
 func (repository *ProfileRepositoryImpl) Delete(ctx context.Context, client *firestore.Client, profileId string) error {
-	panic("not implemented") // TODO: Implement
+
+	docRef := client.Collection("profiles").Doc(profileId)
+
+	_, err := docRef.Delete(ctx)
+	if err != nil {
+		return errors.New("failed to delete document :" + err.Error())
+	}
+
+	return nil
 }
