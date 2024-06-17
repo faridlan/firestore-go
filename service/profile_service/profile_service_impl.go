@@ -68,8 +68,28 @@ func (service *ProfileServiceimpl) Find(ctx context.Context, profileId string) (
 
 }
 
-func (service *ProfileServiceimpl) Update(ctx context.Context, profileId string) (*web.Profile, error) {
-	panic("not implemented") // TODO: Implement
+func (service *ProfileServiceimpl) Update(ctx context.Context, request *web.Profile) (*web.Profile, error) {
+
+	profileResponse, err := service.ProfileRepo.Find(ctx, service.Client, request.ID)
+	if err != nil {
+		return nil, &exception.NotFound{
+			Message: err.Error(),
+		}
+	}
+
+	profileResponse.Name = request.Name
+	profileResponse.Description = request.Description
+	profileResponse.Email = request.Email
+	profileResponse.MediaSocial = domain.MediaSocial(request.MediaSocial)
+	profileResponse.About = request.About
+
+	profile, err := service.ProfileRepo.Update(ctx, service.Client, profileResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	return helper.ToProfileResponse(profile), nil
+
 }
 
 func (service *ProfileServiceimpl) Delete(ctx context.Context, profileId string) error {

@@ -21,6 +21,7 @@ func NewRouter(router Router) *fiber.App {
 	app.Post("/api/profiles", router.ProfileContrroler.Save)
 	app.Get("/api/profiles/:profileId", router.ProfileContrroler.Find)
 	app.Delete("/api/profiles/:profileId", router.ProfileContrroler.Delete)
+	app.Put("/api/profiles/:profileId", router.ProfileContrroler.Update)
 
 	return app
 

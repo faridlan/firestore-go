@@ -61,8 +61,42 @@ func (repository *ProfileRepositoryImpl) Find(ctx context.Context, client *fires
 
 }
 
-func (repository *ProfileRepositoryImpl) Update(ctx context.Context, client *firestore.Client, profileId string) (*domain.Profile, error) {
-	panic("not implemented") // TODO: Implement
+func (repository *ProfileRepositoryImpl) Update(ctx context.Context, client *firestore.Client, profile *domain.Profile) (*domain.Profile, error) {
+
+	docRef := client.Collection("profiles").Doc(profile.ID)
+
+	updates := []firestore.Update{
+		{
+			Path:  "name",
+			Value: profile.Name,
+		},
+		{
+			Path:  "description",
+			Value: profile.Description,
+		},
+		{
+			Path:  "email",
+			Value: profile.Email,
+		},
+		{
+			Path:  "media_social",
+			Value: profile.MediaSocial,
+		},
+		{
+			Path:  "about",
+			Value: profile.About,
+		},
+	}
+
+	_, err := docRef.Update(ctx, updates)
+	if err != nil {
+		return nil, errors.New("failed to update document :" + err.Error())
+	}
+
+	profile.ID = docRef.ID
+
+	return profile, nil
+
 }
 
 func (repository *ProfileRepositoryImpl) Delete(ctx context.Context, client *firestore.Client, profileId string) error {

@@ -59,7 +59,30 @@ func (controller *ProfileControllerImpl) Find(ctx *fiber.Ctx) error {
 }
 
 func (controller *ProfileControllerImpl) Update(ctx *fiber.Ctx) error {
-	panic("not implemented") // TODO: Implement
+
+	profileid := ctx.Params("profileId")
+
+	profileUpdate := new(web.Profile)
+	err := ctx.BodyParser(profileUpdate)
+	if err != nil {
+		return err
+	}
+
+	profileUpdate.ID = profileid
+
+	profileResposne, err := controller.ProfileService.Update(ctx.Context(), profileUpdate)
+	if err != nil {
+		return err
+	}
+
+	webResponse := web.WebResponse{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data:   profileResposne,
+	}
+
+	return ctx.JSON(webResponse)
+
 }
 
 func (controller *ProfileControllerImpl) Delete(ctx *fiber.Ctx) error {
