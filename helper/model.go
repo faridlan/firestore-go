@@ -21,3 +21,28 @@ func ToProfileResponse(profile *domain.Profile) *web.Profile {
 	}
 
 }
+
+func ToExperienceResponse(experience *domain.Experience) *web.ExperienceResponse {
+
+	return &web.ExperienceResponse{
+		ID:          experience.ID,
+		CompanyName: experience.CompanyName,
+		Address:     experience.Address,
+		Title:       experience.Title,
+		EntryYear:   experience.EntryYear,
+		OutYear:     experience.OutYear,
+		JobDesk:     experience.JobDesk,
+	}
+
+}
+
+func ToExperienceResponses(experiences []*domain.Experience) []*web.ExperienceResponse {
+
+	experienceResponses := []*web.ExperienceResponse{}
+	for _, experience := range experiences {
+		experienceResponses = append(experienceResponses, ToExperienceResponse(experience))
+	}
+
+	return experienceResponses
+
+}
