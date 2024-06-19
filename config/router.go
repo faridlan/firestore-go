@@ -1,6 +1,7 @@
 package config
 
 import (
+	educationcontroller "github.com/faridlan/firestore-go/controller/education_controller"
 	experiencecontroller "github.com/faridlan/firestore-go/controller/experience_controller"
 	profilecontroller "github.com/faridlan/firestore-go/controller/profile_controller"
 	"github.com/faridlan/firestore-go/exception"
@@ -10,6 +11,7 @@ import (
 type Router struct {
 	ProfileContrroler    profilecontroller.ProfileController
 	ExperienceContrroler experiencecontroller.ExperienceController
+	EducationController  educationcontroller.EducationController
 }
 
 func NewRouter(router Router) *fiber.App {
@@ -30,6 +32,12 @@ func NewRouter(router Router) *fiber.App {
 	app.Get("/api/experience/", router.ExperienceContrroler.Find)
 	app.Delete("/api/experience/:experienceId", router.ExperienceContrroler.Delete)
 	app.Put("/api/experience/:experienceId", router.ExperienceContrroler.Update)
+
+	app.Post("/api/education", router.EducationController.Save)
+	app.Get("/api/education/:educationId", router.EducationController.FindId)
+	app.Get("/api/education/", router.EducationController.Find)
+	app.Delete("/api/education/:educationId", router.EducationController.Delete)
+	app.Put("/api/education/:educationId", router.EducationController.Update)
 
 	return app
 

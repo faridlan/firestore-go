@@ -46,3 +46,29 @@ func ToExperienceResponses(experiences []*domain.Experience) []*web.ExperienceRe
 	return experienceResponses
 
 }
+
+func ToEducationResponse(education *domain.Education) *web.EducationResponse {
+
+	return &web.EducationResponse{
+		ID:        education.ID,
+		EduName:   education.EduName,
+		Address:   education.Address,
+		EntryYear: education.EntryYear,
+		OutYear:   education.OutYear,
+		Title:     education.Title,
+		Achiev:    education.Achiev,
+	}
+
+}
+
+func ToEducationResponses(educations []*domain.Education) []*web.EducationResponse {
+
+	educactionResponses := []*web.EducationResponse{}
+
+	for _, education := range educations {
+		educactionResponses = append(educactionResponses, ToEducationResponse(education))
+	}
+
+	return educactionResponses
+
+}
