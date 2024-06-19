@@ -117,6 +117,8 @@ func (repository *ExperienceRepositoryImpl) FindId(ctx context.Context, client *
 		return nil, errors.New("failed to encode documents : " + err.Error())
 	}
 
+	experience.ID = docSnapshot.Ref.ID
+
 	return &experience, nil
 
 }
@@ -127,7 +129,7 @@ func (repository *ExperienceRepositoryImpl) Delete(ctx context.Context, client *
 
 	_, err := docRef.Delete(ctx)
 	if err != nil {
-		return errors.New("failed to delete experience" + err.Error())
+		return errors.New("failed to delete experience : " + err.Error())
 	}
 
 	return nil
