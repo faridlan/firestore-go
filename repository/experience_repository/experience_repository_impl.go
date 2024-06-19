@@ -47,7 +47,7 @@ func (repository *ExperienceRepositoryImpl) Update(ctx context.Context, client *
 			Value: experience.Title,
 		},
 		{
-			Path:  "entry_yesr",
+			Path:  "entry_year",
 			Value: experience.EntryYear,
 		},
 		{
@@ -55,7 +55,7 @@ func (repository *ExperienceRepositoryImpl) Update(ctx context.Context, client *
 			Value: experience.OutYear,
 		},
 		{
-			Path:  "job_des",
+			Path:  "job_desk",
 			Value: experience.JobDesk,
 		},
 	}
