@@ -72,7 +72,7 @@ func (repository *EducationRepositoryImpl) Update(ctx context.Context, client *f
 
 func (repository *EducationRepositoryImpl) Find(ctx context.Context, client *firestore.Client) ([]*domain.Education, error) {
 
-	iter := client.Collection("education").Documents(ctx)
+	iter := client.Collection("educations").Documents(ctx)
 
 	defer iter.Stop()
 
@@ -89,10 +89,12 @@ func (repository *EducationRepositoryImpl) Find(ctx context.Context, client *fir
 		}
 
 		var education *domain.Education
-		err = docSnapshot.DataTo(education)
+		err = docSnapshot.DataTo(&education)
 		if err != nil {
 			return nil, errors.New("failed to decode doc : " + err.Error())
 		}
+
+		education.ID = docSnapshot.Ref.ID
 
 		educations = append(educations, education)
 	}
@@ -103,7 +105,7 @@ func (repository *EducationRepositoryImpl) Find(ctx context.Context, client *fir
 
 func (repository *EducationRepositoryImpl) FindId(ctx context.Context, client *firestore.Client, educationId string) (*domain.Education, error) {
 
-	docRef := client.Collection("education").Doc(educationId)
+	docRef := client.Collection("educations").Doc(educationId)
 
 	docSnapshot, err := docRef.Get(ctx)
 	if err != nil {
@@ -113,7 +115,7 @@ func (repository *EducationRepositoryImpl) FindId(ctx context.Context, client *f
 	var education *domain.Education
 	docSnapshot.DataTo(&education)
 
-	docRef.ID = docSnapshot.Ref.ID
+	education.ID = docSnapshot.Ref.ID
 
 	return education, nil
 
@@ -121,7 +123,7 @@ func (repository *EducationRepositoryImpl) FindId(ctx context.Context, client *f
 
 func (repository *EducationRepositoryImpl) Delete(ctx context.Context, client *firestore.Client, educationId string) error {
 
-	docRef := client.Collection("education").Doc(educationId)
+	docRef := client.Collection("educations").Doc(educationId)
 
 	_, err := docRef.Delete(ctx)
 	if err != nil {

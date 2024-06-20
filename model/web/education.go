@@ -11,6 +11,7 @@ type EducationResponse struct {
 }
 
 type EducationCreate struct {
+	ID        string   `json:"id,omitempty"`
 	EduName   string   `json:"edu_name,omitempty"`
 	Address   string   `json:"address,omitempty"`
 	EntryYear string   `json:"entry_year,omitempty"`

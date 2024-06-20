@@ -33,11 +33,11 @@ func NewRouter(router Router) *fiber.App {
 	app.Delete("/api/experience/:experienceId", router.ExperienceContrroler.Delete)
 	app.Put("/api/experience/:experienceId", router.ExperienceContrroler.Update)
 
-	app.Post("/api/education", router.EducationController.Save)
-	app.Get("/api/education/:educationId", router.EducationController.FindId)
-	app.Get("/api/education/", router.EducationController.Find)
-	app.Delete("/api/education/:educationId", router.EducationController.Delete)
-	app.Put("/api/education/:educationId", router.EducationController.Update)
+	app.Post("/api/educations", router.EducationController.Save)
+	app.Get("/api/educations/:eduId", router.EducationController.FindId)
+	app.Get("/api/educations/", router.EducationController.Find)
+	app.Delete("/api/educations/:eduId", router.EducationController.Delete)
+	app.Put("/api/educations/:eduId", router.EducationController.Update)
 
 	return app
 
