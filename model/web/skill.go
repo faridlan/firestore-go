@@ -2,7 +2,7 @@ package web
 
 type SkillCreate struct {
 	ID   string `firestore:"id,omitempty"`
-	Name string `firestore:"name"`
+	Name string `firestore:"name" validate:"required"`
 }
 
 type SkillResponse struct {

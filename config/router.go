@@ -42,10 +42,10 @@ func NewRouter(router Router) *fiber.App {
 	app.Put("/api/educations/:eduId", router.EducationController.Update)
 
 	app.Post("/api/skills", router.SkillController.Save)
-	app.Get("/api/skills/:skilId", router.SkillController.FindId)
+	app.Get("/api/skills/:skillId", router.SkillController.FindId)
 	app.Get("/api/skills/", router.SkillController.Find)
-	app.Delete("/api/skills/:skilId", router.SkillController.Delete)
-	app.Put("/api/skills/:skilId", router.SkillController.Update)
+	app.Delete("/api/skills/:skillId", router.SkillController.Delete)
+	app.Put("/api/skills/:skillId", router.SkillController.Update)
 
 	return app
 
