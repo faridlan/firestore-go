@@ -1,11 +1,14 @@
 package main
 
 import (
+	"log"
+
 	"github.com/faridlan/firestore-go/config"
 	educationcontroller "github.com/faridlan/firestore-go/controller/education_controller"
 	experiencecontroller "github.com/faridlan/firestore-go/controller/experience_controller"
 	profilecontroller "github.com/faridlan/firestore-go/controller/profile_controller"
 	skillcontroller "github.com/faridlan/firestore-go/controller/skill_controller"
+	"github.com/faridlan/firestore-go/helper"
 	educationrepository "github.com/faridlan/firestore-go/repository/education_repository"
 	experiencerepository "github.com/faridlan/firestore-go/repository/experience_repository"
 	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
@@ -18,6 +21,11 @@ import (
 )
 
 func main() {
+
+	err := helper.LoadEnv()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	db, _ := config.NewDatabase()
 	validate := validator.New()

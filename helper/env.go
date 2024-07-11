@@ -2,27 +2,17 @@ package helper
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
 )
 
-func GetEnv() (*viper.Viper, error) {
+func LoadEnv() error {
 
-	config := viper.New()
-	configPath := os.Getenv("CONFIG")
-
-	if configPath == "" {
-		config.SetConfigFile("../.env")
-	} else {
-		config.SetConfigFile(configPath)
-	}
-
-	err := config.ReadInConfig()
+	err := godotenv.Load()
 	if err != nil {
-		return nil, fmt.Errorf("error reading config file: %w", err)
+		return fmt.Errorf("failed to load env : %v", err)
 	}
 
-	return config, nil
+	return nil
 
 }
