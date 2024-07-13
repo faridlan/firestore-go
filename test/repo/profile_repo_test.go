@@ -6,11 +6,11 @@ import (
 
 	"github.com/faridlan/firestore-go/config"
 	"github.com/faridlan/firestore-go/model/domain"
+	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
 	"github.com/stretchr/testify/assert"
 )
 
 var repoProfile profilerepository.ProfileRepository
-
 
 func TestGetProfile(t *testing.T) {
 
@@ -43,4 +43,15 @@ func TestCreateProfile(t *testing.T) {
 
 	fmt.Println(profileResponse)
 
+}
+
+func TestDeleteProfile(t *testing.T) {
+	clients, err := config.NewDatabase()
+	assert.Nil(t, err)
+
+	profileResponse, err := repoProfile.Find(ctx, clients, "HxHIO0QGmdx0ACj7hYh8")
+	assert.Nil(t, err)
+
+	err = repoProfile.Delete(ctx, clients, profileResponse.ID)
+	assert.Nil(t, err)
 }
