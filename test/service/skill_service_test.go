@@ -9,7 +9,9 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/faridlan/firestore-go/config"
 	"github.com/faridlan/firestore-go/model/web"
+	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
 	skillrepository "github.com/faridlan/firestore-go/repository/skill_repository"
+	profileservice "github.com/faridlan/firestore-go/service/profile_service"
 	skillservice "github.com/faridlan/firestore-go/service/skill_service"
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
@@ -37,6 +39,9 @@ func init() {
 
 	skillRepo := skillrepository.NewSkillRepository()
 	skillService = skillservice.NewSkillService(skillRepo, client, validate)
+
+	profileRepo := profilerepository.NewProfileRepository()
+	profileService = profileservice.NewProfileService(profileRepo, client, validate)
 
 }
 
