@@ -77,7 +77,7 @@ func (repository *ExperienceRepositoryImpl) Find(ctx context.Context, client *fi
 
 	defer iter.Stop()
 
-	clients := []*domain.Experience{}
+	Expereinces := []*domain.Experience{}
 
 	for {
 		docSnapshot, err := iter.Next()
@@ -89,16 +89,16 @@ func (repository *ExperienceRepositoryImpl) Find(ctx context.Context, client *fi
 			return nil, errors.New("failed to iterate through documents : " + err.Error())
 		}
 
-		client := domain.Experience{}
-		err = docSnapshot.DataTo(&client)
+		experience := &domain.Experience{}
+		err = docSnapshot.DataTo(&experience)
 		if err != nil {
 			return nil, errors.New("failed to decode documents : " + err.Error())
 		}
 
-		clients = append(clients, &client)
+		Expereinces = append(Expereinces, experience)
 	}
 
-	return clients, nil
+	return Expereinces, nil
 
 }
 
