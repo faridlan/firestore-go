@@ -9,6 +9,7 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/faridlan/firestore-go/config"
 	"github.com/faridlan/firestore-go/model/domain"
+	educationrepository "github.com/faridlan/firestore-go/repository/education_repository"
 	experiencerepository "github.com/faridlan/firestore-go/repository/experience_repository"
 	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
 	skillrepository "github.com/faridlan/firestore-go/repository/skill_repository"
@@ -36,6 +37,7 @@ func init() {
 	skillRepo = skillrepository.NewSkillRepository()
 	repoProfile = profilerepository.NewProfileRepository()
 	experienceRepo = experiencerepository.NewExperienceRepository()
+	educationRepo = educationrepository.NewEducationRepository()
 }
 
 func loadEnv() error {
