@@ -9,8 +9,10 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/faridlan/firestore-go/config"
 	"github.com/faridlan/firestore-go/model/web"
+	experiencerepository "github.com/faridlan/firestore-go/repository/experience_repository"
 	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
 	skillrepository "github.com/faridlan/firestore-go/repository/skill_repository"
+	experienceservice "github.com/faridlan/firestore-go/service/experience_service"
 	profileservice "github.com/faridlan/firestore-go/service/profile_service"
 	skillservice "github.com/faridlan/firestore-go/service/skill_service"
 	"github.com/go-playground/validator/v10"
@@ -42,6 +44,9 @@ func init() {
 
 	profileRepo := profilerepository.NewProfileRepository()
 	profileService = profileservice.NewProfileService(profileRepo, client, validate)
+
+	experienceRepo := experiencerepository.NewExperienceRepository()
+	experienceService = experienceservice.NewExperienceService(experienceRepo, client, validate)
 
 }
 
