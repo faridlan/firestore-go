@@ -9,9 +9,11 @@ import (
 	"cloud.google.com/go/firestore"
 	"github.com/faridlan/firestore-go/config"
 	"github.com/faridlan/firestore-go/model/web"
+	educationrepository "github.com/faridlan/firestore-go/repository/education_repository"
 	experiencerepository "github.com/faridlan/firestore-go/repository/experience_repository"
 	profilerepository "github.com/faridlan/firestore-go/repository/profile_repository"
 	skillrepository "github.com/faridlan/firestore-go/repository/skill_repository"
+	educationservice "github.com/faridlan/firestore-go/service/education_service"
 	experienceservice "github.com/faridlan/firestore-go/service/experience_service"
 	profileservice "github.com/faridlan/firestore-go/service/profile_service"
 	skillservice "github.com/faridlan/firestore-go/service/skill_service"
@@ -47,6 +49,9 @@ func init() {
 
 	experienceRepo := experiencerepository.NewExperienceRepository()
 	experienceService = experienceservice.NewExperienceService(experienceRepo, client, validate)
+
+	educationRepo := educationrepository.NewEducationRepository()
+	educationService = educationservice.NewEducationService(educationRepo, client, validate)
 
 }
 
