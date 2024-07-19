@@ -1,8 +1,12 @@
 package controller
 
 import (
-	"context"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 
 	"cloud.google.com/go/firestore"
 	"github.com/faridlan/firestore-go/config"
@@ -19,13 +23,15 @@ import (
 	profileservice "github.com/faridlan/firestore-go/service/profile_service"
 	skillservice "github.com/faridlan/firestore-go/service/skill_service"
 	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
 	skillController skillcontroller.SkillController
 	client          *firestore.Client
-	ctx             = context.Background()
+	app             = fiber.New()
 )
 
 func init() {
@@ -66,4 +72,38 @@ func loadEnv() error {
 		return err
 	}
 	return nil
+}
+
+func ResponseTest(t *testing.T, request *http.Request, statudCode int) {
+
+	request.Header.Set("content-type", "application/json")
+	response, err := app.Test(request)
+	assert.Nil(t, err)
+	assert.Equal(t, statudCode, response.StatusCode)
+
+	byte, err := io.ReadAll(response.Body)
+	assert.Nil(t, err)
+
+	fmt.Println(string(byte))
+
+}
+
+func TestSkillFind(t *testing.T) {
+
+	app.Get("/api/skills", skillController.Find)
+
+	request := httptest.NewRequest("GET", "/api/skills", nil)
+
+	ResponseTest(t, request, 200)
+
+}
+
+func TestSkillFindId(t *testing.T) {
+
+	app.Get("/api/skills/:skillId", skillController.FindId)
+
+	request := httptest.NewRequest("GET", "/api/skills/bodX9IS7s4sN3E6Di3xG", nil)
+
+	ResponseTest(t, request, 200)
+
 }
