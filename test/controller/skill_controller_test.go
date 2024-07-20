@@ -107,3 +107,7 @@ func TestSkillFindId(t *testing.T) {
 	ResponseTest(t, request, 200)
 
 }
+
+func TestSkillSave(t *testing.T) {
+
+}
