@@ -111,3 +111,7 @@ func TestSkillFindId(t *testing.T) {
 func TestSkillSave(t *testing.T) {
 
 }
+
+func TestSkillUpdate(t *testing.T) {
+
+}
