@@ -115,3 +115,7 @@ func TestSkillSave(t *testing.T) {
 func TestSkillUpdate(t *testing.T) {
 
 }
+
+func TestSkillDelete(t *testing.T) {
+
+}
