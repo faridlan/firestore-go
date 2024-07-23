@@ -118,4 +118,10 @@ func TestSkillUpdate(t *testing.T) {
 
 func TestSkillDelete(t *testing.T) {
 
+	app.Delete("/api/skills/:skillId", skillController.Delete)
+
+	request := httptest.NewRequest("GET", "/api/skills/bodX9IS7s4sN3E6Di3xG", nil)
+
+	ResponseTest(t, request, 200)
+
 }
